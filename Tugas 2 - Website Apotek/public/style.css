@@ -1,0 +1,442 @@
+/* ============================================================
+   style.css  –  ApotekApp
+   Tema: Dark Blue Modern Card-based
+   Font: Plus Jakarta Sans
+============================================================ */
+
+/* ── Variabel Warna ──────────────────────────────────────── */
+:root {
+  --navy      : #0a1628;   /* background utama */
+  --navy-2    : #0f2044;   /* card / section */
+  --navy-3    : #152a5a;   /* border & hover */
+  --blue      : #1a56db;   /* accent utama */
+  --blue-light: #3b82f6;   /* hover accent */
+  --teal      : #0d9488;
+  --orange    : #f59e0b;
+  --red       : #ef4444;
+  --white     : #ffffff;
+  --gray-text : #94a3b8;
+  --border    : rgba(255,255,255,0.08);
+}
+
+/* ── Reset & Base ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family : 'Plus Jakarta Sans', sans-serif;
+  background  : var(--navy);
+  color       : var(--white);
+  min-height  : 100vh;
+  font-size   : 0.95rem;
+}
+
+/* ── NAVBAR ──────────────────────────────────────────────── */
+.navbar {
+  background  : rgba(10, 22, 40, 0.95);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding-top   : 0.9rem;
+  padding-bottom: 0.9rem;
+  position    : sticky;
+  top         : 0;
+  z-index     : 1000;
+}
+
+.navbar-brand {
+  font-size  : 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color      : var(--white) !important;
+}
+
+.nav-link {
+  color       : var(--gray-text) !important;
+  border-radius: 8px;
+  padding     : 0.4rem 0.8rem !important;
+  font-weight : 500;
+  transition  : all 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(26, 86, 219, 0.2);
+  color     : var(--white) !important;
+}
+
+/* ── HERO SECTION ────────────────────────────────────────── */
+.hero-section {
+  background  : linear-gradient(135deg, var(--navy) 0%, #0d2060 50%, var(--navy-2) 100%);
+  padding     : 5rem 1rem 4rem;
+  position    : relative;
+  overflow    : hidden;
+}
+
+/* Lingkaran dekoratif di background hero */
+.hero-section::before {
+  content  : '';
+  position : absolute;
+  width    : 500px;
+  height   : 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,86,219,0.15) 0%, transparent 70%);
+  top      : -100px;
+  right    : -100px;
+  pointer-events: none;
+}
+
+.hero-badge {
+  display       : inline-block;
+  background    : rgba(26, 86, 219, 0.2);
+  border        : 1px solid rgba(26, 86, 219, 0.4);
+  color         : #93c5fd;
+  padding       : 0.3rem 1rem;
+  border-radius : 999px;
+  font-size     : 0.8rem;
+  font-weight   : 600;
+  letter-spacing: 0.5px;
+}
+
+.hero-title {
+  font-size  : clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+.text-accent { color: #60a5fa; }
+
+.hero-sub {
+  color    : var(--gray-text);
+  font-size: 1.05rem;
+  max-width: 520px;
+  margin   : 0 auto;
+}
+
+/* ── TOMBOL ──────────────────────────────────────────────── */
+.btn-primary-custom {
+  background   : var(--blue);
+  color        : white;
+  border       : none;
+  border-radius: 10px;
+  font-weight  : 600;
+  padding      : 0.55rem 1.4rem;
+  transition   : all 0.2s ease;
+}
+.btn-primary-custom:hover {
+  background: var(--blue-light);
+  color     : white;
+  transform : translateY(-1px);
+  box-shadow: 0 6px 20px rgba(26,86,219,0.4);
+}
+
+.btn-outline-custom {
+  background   : transparent;
+  color        : var(--blue-light);
+  border       : 1.5px solid var(--blue-light);
+  border-radius: 10px;
+  font-weight  : 600;
+  padding      : 0.55rem 1.4rem;
+  transition   : all 0.2s ease;
+}
+.btn-outline-custom:hover {
+  background: rgba(59,130,246,0.1);
+  color     : var(--white);
+}
+
+/* ── STAT CARDS (dashboard) ──────────────────────────────── */
+.stat-card {
+  background   : var(--navy-2);
+  border       : 1px solid var(--border);
+  border-radius: 16px;
+  transition   : transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stat-card:hover {
+  transform : translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  display  : block;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size  : 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color    : var(--gray-text);
+  margin-top: 0.4rem;
+}
+
+/* Warna icon per kartu */
+.stat-blue   .stat-icon { color: #60a5fa; }
+.stat-teal   .stat-icon { color: #2dd4bf; }
+.stat-orange .stat-icon { color: #fbbf24; }
+.stat-red    .stat-icon { color: #f87171; }
+
+/* ── FEATURE CARDS (dashboard) ──────────────────────────── */
+.section-title {
+  font-size  : 1.2rem;
+  font-weight: 700;
+  color      : var(--white);
+}
+
+.feature-card {
+  background   : var(--navy-2);
+  border       : 1px solid var(--border);
+  border-radius: 16px;
+  transition   : transform 0.2s ease;
+}
+.feature-card:hover { transform: translateY(-3px); }
+
+.feature-icon {
+  width        : 48px;
+  height       : 48px;
+  background   : rgba(26,86,219,0.15);
+  border-radius: 12px;
+  display      : flex;
+  align-items  : center;
+  justify-content: center;
+  font-size    : 1.4rem;
+  color        : #60a5fa;
+}
+
+.btn-feature {
+  background   : transparent;
+  color        : #60a5fa;
+  border       : 1px solid rgba(96,165,250,0.3);
+  border-radius: 8px;
+  padding      : 0.3rem 0.9rem;
+  font-size    : 0.85rem;
+  font-weight  : 600;
+  transition   : all 0.2s;
+}
+.btn-feature:hover {
+  background: rgba(26,86,219,0.2);
+  color     : white;
+}
+
+/* ── PAGE HEADER (data & form pages) ────────────────────── */
+.page-header {
+  background : var(--navy-2);
+  border-bottom: 1px solid var(--border);
+  padding    : 1.5rem 0;
+}
+
+/* ── CARD MODERN (container tabel & form) ────────────────── */
+.card-modern {
+  background   : var(--navy-2);
+  border       : 1px solid var(--border);
+  border-radius: 16px;
+}
+
+/* ── TABEL ───────────────────────────────────────────────── */
+.table {
+  color            : #cbd5e1;
+  border-color     : transparent;
+  --bs-table-bg    : transparent;
+  --bs-table-color : #cbd5e1;
+  margin-bottom    : 0;
+}
+
+/* Override paksa background putih Bootstrap */
+.table > :not(caption) > * > * {
+  background-color : transparent !important;
+  border-bottom    : 1px solid rgba(255,255,255,0.05);
+  color            : inherit;
+}
+
+.table thead th {
+  background     : rgba(10, 22, 40, 0.6);
+  color          : #7fa8d4;
+  font-weight    : 600;
+  font-size      : 0.78rem;
+  text-transform : uppercase;
+  letter-spacing : 0.8px;
+  border-bottom  : 1px solid rgba(26,86,219,0.3) !important;
+  padding        : 0.85rem 1rem;
+}
+
+.table tbody tr {
+  transition  : background 0.15s;
+}
+
+.table tbody tr:nth-child(odd) > td {
+  background: rgba(255,255,255,0.015) !important;
+}
+
+.table tbody tr:hover > td {
+  background: rgba(26, 86, 219, 0.1) !important;
+}
+
+.table td { padding: 0.85rem 1rem; vertical-align: middle; }
+
+/* Badge kategori */
+.badge-kategori {
+  background   : rgba(26,86,219,0.12);
+  color        : #7ea8d4;
+  border       : 1px solid rgba(26,86,219,0.2);
+  border-radius: 6px;
+  padding      : 0.2rem 0.65rem;
+  font-size    : 0.78rem;
+  font-weight  : 600;
+  letter-spacing: 0.2px;
+}
+
+/* Tombol edit & hapus di tabel */
+.btn-edit {
+  background   : rgba(26,86,219,0.15);
+  color        : #60a5fa;
+  border       : 1px solid rgba(26,86,219,0.3);
+  border-radius: 8px;
+  padding      : 0.3rem 0.6rem;
+  transition   : all 0.2s;
+}
+.btn-edit:hover { background: var(--blue); color: white; }
+
+.btn-hapus {
+  background   : rgba(239,68,68,0.15);
+  color        : #f87171;
+  border       : 1px solid rgba(239,68,68,0.3);
+  border-radius: 8px;
+  padding      : 0.3rem 0.6rem;
+  transition   : all 0.2s;
+}
+.btn-hapus:hover { background: var(--red); color: white; }
+
+/* ── WARNA TEKS TABEL (subtle, serasi) ──────────────────── */
+.stok-aman        { color: #4ade80; }   /* hijau soft */
+.stok-rendah      { color: #fb923c; }   /* oranye (bukan merah keras) */
+.kadaluarsa-dekat { color: #f87171; }   /* merah muda soft */
+.teks-muted-tabel { color: #94a3b8; }   /* abu default tabel */
+
+/* ── DATATABLES override ─────────────────────────────────── */
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+  background   : var(--navy-3);
+  border       : 1px solid var(--border);
+  color        : var(--white);
+  border-radius: 8px;
+  padding      : 0.3rem 0.6rem;
+}
+
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label { color: var(--gray-text); }
+
+.dataTables_wrapper .page-link {
+  background : var(--navy-3);
+  border     : 1px solid var(--border);
+  color      : var(--white);
+}
+.dataTables_wrapper .page-link:hover,
+.dataTables_wrapper .page-item.active .page-link {
+  background: var(--blue);
+  border-color: var(--blue);
+  color     : white;
+}
+
+/* ── FORM INPUT ──────────────────────────────────────────── */
+.form-modern {
+  background   : var(--navy-3);
+  border       : 1.5px solid var(--border);
+  border-radius: 10px;
+  color        : var(--white);
+  padding      : 0.6rem 0.9rem;
+  transition   : border-color 0.2s;
+}
+
+.form-modern:focus {
+  background  : var(--navy-3);
+  border-color: var(--blue-light);
+  color       : var(--white);
+  box-shadow  : 0 0 0 3px rgba(59,130,246,0.15);
+  outline     : none;
+}
+
+.form-modern::placeholder { color: rgba(148,163,184,0.6); }
+
+.form-label { color: #cbd5e1; font-weight: 600; font-size: 0.9rem; }
+
+/* Ikon dekoratif di form */
+.form-icon-wrap {
+  width        : 60px;
+  height       : 60px;
+  background   : rgba(26,86,219,0.15);
+  border-radius: 14px;
+  display      : flex;
+  align-items  : center;
+  justify-content: center;
+  font-size    : 1.8rem;
+  color        : #60a5fa;
+  margin       : 0 auto;
+}
+
+/* Preview harga */
+.preview-harga {
+  background   : rgba(26,86,219,0.1);
+  border       : 1px solid rgba(26,86,219,0.25);
+  border-radius: 8px;
+  padding      : 0.5rem 1rem;
+  font-size    : 0.9rem;
+  color        : #93c5fd;
+}
+
+/* ── MODAL ───────────────────────────────────────────────── */
+.modal-modern {
+  background   : var(--navy-2);
+  border       : 1px solid var(--border);
+  border-radius: 16px;
+  color        : var(--white);
+}
+
+.modal-modern .modal-header {
+  background   : var(--navy-3);
+  border-bottom: 1px solid var(--border);
+  border-radius: 16px 16px 0 0;
+}
+
+.modal-modern .modal-footer {
+  border-top  : 1px solid var(--border);
+}
+
+/* Icon hapus di modal */
+.delete-icon {
+  width        : 64px;
+  height       : 64px;
+  background   : rgba(239,68,68,0.15);
+  border-radius: 50%;
+  display      : flex;
+  align-items  : center;
+  justify-content: center;
+  font-size    : 1.8rem;
+  color        : #f87171;
+  margin       : 0 auto;
+}
+
+/* ── LINK SUBTLE ─────────────────────────────────────────── */
+.link-subtle {
+  color      : var(--gray-text);
+  font-size  : 0.9rem;
+  text-decoration: none;
+  transition : color 0.2s;
+}
+.link-subtle:hover { color: var(--white); }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.footer-bar {
+  background : var(--navy-2);
+  border-top : 1px solid var(--border);
+  color      : var(--gray-text);
+  font-size  : 0.85rem;
+}
+
+/* ── UTILITY ─────────────────────────────────────────────── */
+.fw-600 { font-weight: 600 !important; }
+.fw-700 { font-weight: 700 !important; }
+.fw-800 { font-weight: 800 !important; }

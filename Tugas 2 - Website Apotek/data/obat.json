@@ -1,0 +1,45 @@
+{
+  "nextId": 11,
+  "obat": [
+    {
+      "id": 1,
+      "nama": "Paracetamol 500mg",
+      "kategori": "Analgesik",
+      "stok": 150,
+      "harga": 3500,
+      "kadaluarsa": "2026-12-01"
+    },
+    {
+      "id": 2,
+      "nama": "Amoxicillin 500mg",
+      "kategori": "Antibiotik",
+      "stok": 80,
+      "harga": 8000,
+      "kadaluarsa": "2026-08-15"
+    },
+    {
+      "id": 3,
+      "nama": "Vitamin C 1000mg",
+      "kategori": "Suplemen",
+      "stok": 200,
+      "harga": 5000,
+      "kadaluarsa": "2027-03-20"
+    },
+    {
+      "id": 4,
+      "nama": "Antasida Tablet",
+      "kategori": "Antasida",
+      "stok": 60,
+      "harga": 4000,
+      "kadaluarsa": "2026-05-10"
+    },
+    {
+      "id": 5,
+      "nama": "Ibuprofen 400mg",
+      "kategori": "Analgesik",
+      "stok": 120,
+      "harga": 6500,
+      "kadaluarsa": "2026-09-30"
+    }
+  ]
+}

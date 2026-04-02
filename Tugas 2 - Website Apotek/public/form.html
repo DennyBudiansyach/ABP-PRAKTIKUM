@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApteKarsidenan – Tambah Obat</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark px-4">
+  <a class="navbar-brand fw-800" href="index.html">
+    <i class="bi bi-capsule-pill me-2"></i>ApteKarsidenan
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navMenu">
+    <ul class="navbar-nav ms-auto gap-1">
+      <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house me-1"></i>Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="data.html"><i class="bi bi-table me-1"></i>Data Obat</a></li>
+      <li class="nav-item"><a class="nav-link active" href="form.html"><i class="bi bi-plus-circle me-1"></i>Tambah Obat</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h3 class="fw-700 mb-0">Tambah Obat Baru</h3>
+    <small class="text-muted">Isi form di bawah untuk mendaftarkan obat baru</small>
+  </div>
+</div>
+
+<!-- FORM SECTION -->
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <!-- Card utama form -->
+      <div class="card-modern p-4 p-md-5">
+
+        <!-- Ikon dekoratif -->
+        <div class="form-icon-wrap mb-4">
+          <i class="bi bi-capsule-pill"></i>
+        </div>
+
+        <!-- Pesan sukses/error (tersembunyi awalnya) -->
+        <div id="alertBox" class="alert d-none mb-4" role="alert"></div>
+
+        <!-- Form Input -->
+        <div id="formObat">
+
+          <!-- Nama Obat -->
+          <div class="mb-3">
+            <label class="form-label fw-600">
+              <i class="bi bi-tag me-1 text-accent"></i>Nama Obat <span class="text-danger">*</span>
+            </label>
+            <input type="text" id="nama" class="form-control form-modern"
+                   placeholder="contoh: Paracetamol 500mg" maxlength="100" />
+            <div class="invalid-feedback">Nama obat wajib diisi.</div>
+          </div>
+
+          <!-- Kategori -->
+          <div class="mb-3">
+            <label class="form-label fw-600">
+              <i class="bi bi-grid me-1 text-accent"></i>Kategori <span class="text-danger">*</span>
+            </label>
+            <select id="kategori" class="form-select form-modern">
+              <option value="">-- Pilih Kategori --</option>
+              <option>Analgesik</option>
+              <option>Antibiotik</option>
+              <option>Suplemen</option>
+              <option>Antasida</option>
+              <option>Antihistamin</option>
+              <option>Lainnya</option>
+            </select>
+            <div class="invalid-feedback">Kategori wajib dipilih.</div>
+          </div>
+
+          <!-- Stok & Harga berdampingan -->
+          <div class="row g-3 mb-3">
+            <div class="col-6">
+              <label class="form-label fw-600">
+                <i class="bi bi-box-seam me-1 text-accent"></i>Stok <span class="text-danger">*</span>
+              </label>
+              <input type="number" id="stok" class="form-control form-modern"
+                     placeholder="0" min="0" />
+              <div class="invalid-feedback">Stok tidak boleh kosong.</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label fw-600">
+                <i class="bi bi-currency-dollar me-1 text-accent"></i>Harga (Rp) <span class="text-danger">*</span>
+              </label>
+              <input type="number" id="harga" class="form-control form-modern"
+                     placeholder="0" min="0" />
+              <div class="invalid-feedback">Harga tidak boleh kosong.</div>
+            </div>
+          </div>
+
+          <!-- Kadaluarsa -->
+          <div class="mb-4">
+            <label class="form-label fw-600">
+              <i class="bi bi-calendar-event me-1 text-accent"></i>Tanggal Kadaluarsa <span class="text-danger">*</span>
+            </label>
+            <input type="date" id="kadaluarsa" class="form-control form-modern" />
+            <div class="invalid-feedback">Tanggal kadaluarsa wajib diisi.</div>
+          </div>
+
+          <!-- Preview harga real-time (jQuery plugin: format angka) -->
+          <div class="preview-harga mb-4 d-none" id="previewHarga">
+            <i class="bi bi-info-circle me-1"></i>
+            Harga: <strong id="previewAngka">Rp 0</strong>
+          </div>
+
+          <!-- Tombol -->
+          <div class="d-flex gap-3 flex-wrap">
+            <button type="button" id="btnSimpan" class="btn btn-primary-custom flex-grow-1">
+              <i class="bi bi-check-circle me-1"></i>Simpan Obat
+            </button>
+            <button type="button" id="btnReset" class="btn btn-outline-custom">
+              <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+            </button>
+          </div>
+
+        </div>
+        <!-- /formObat -->
+
+      </div>
+      <!-- /card-modern -->
+
+      <!-- Link balik ke tabel -->
+      <div class="text-center mt-3">
+        <a href="data.html" class="link-subtle">
+          <i class="bi bi-arrow-left me-1"></i>Kembali ke Daftar Obat
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ───────────────────────────────────────────────── -->
+<footer class="footer-bar text-center py-3 mt-4">
+  <small>© 2025 ApteKarsidenan · by Node.js & Bootstra</small>
+</footer>
+
+<!-- ── SCRIPTS ──────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- jQuery Mask Plugin (format input angka) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<!-- SweetAlert2 (notifikasi cantik) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+$(document).ready(function () {
+
+  // ── jQuery Mask Plugin: batasi input stok (hanya angka) ──
+  $('#stok').mask('000000');
+
+  // ── Preview harga real-time saat mengetik ────────────────
+  $('#harga').on('input', function () {
+    const val = parseInt($(this).val()) || 0;
+    if (val > 0) {
+      $('#previewAngka').text('Rp ' + val.toLocaleString('id-ID'));
+      $('#previewHarga').removeClass('d-none');
+    } else {
+      $('#previewHarga').addClass('d-none');
+    }
+  });
+
+  // ── Fungsi validasi sederhana ────────────────────────────
+  function validasiForm() {
+    let valid = true;
+
+    // Reset semua tanda invalid
+    $('.form-control, .form-select').removeClass('is-invalid');
+
+    if (!$('#nama').val().trim()) {
+      $('#nama').addClass('is-invalid'); valid = false;
+    }
+    if (!$('#kategori').val()) {
+      $('#kategori').addClass('is-invalid'); valid = false;
+    }
+    if (!$('#stok').val() || parseInt($('#stok').val()) < 0) {
+      $('#stok').addClass('is-invalid'); valid = false;
+    }
+    if (!$('#harga').val() || parseInt($('#harga').val()) < 0) {
+      $('#harga').addClass('is-invalid'); valid = false;
+    }
+    if (!$('#kadaluarsa').val()) {
+      $('#kadaluarsa').addClass('is-invalid'); valid = false;
+    }
+
+    return valid;
+  }
+
+  // ── Tombol Simpan → POST ke API ──────────────────────────
+  $('#btnSimpan').on('click', function () {
+
+    // Hentikan jika validasi gagal
+    if (!validasiForm()) return;
+
+    const payload = {
+      nama       : $('#nama').val().trim(),
+      kategori   : $('#kategori').val(),
+      stok       : $('#stok').val(),
+      harga      : $('#harga').val(),
+      kadaluarsa : $('#kadaluarsa').val(),
+    };
+
+    // Kirim data ke server via AJAX POST
+    $.ajax({
+      url        : '/api/obat',
+      method     : 'POST',
+      contentType: 'application/json',
+      data       : JSON.stringify(payload),
+
+      success: function (res) {
+        Swal.fire({
+          icon             : 'success',
+          title            : 'Berhasil!',
+          text             : `${res.data.nama} berhasil disimpan.`,
+          confirmButtonText: 'Lihat Data',
+          showCancelButton : true,
+          cancelButtonText : 'Tambah Lagi',
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            window.location.href = 'data.html'; // ke halaman tabel
+          } else {
+            resetForm(); // reset untuk input lagi
+          }
+        });
+      },
+
+      error: function (xhr) {
+        const pesan = xhr.responseJSON ? xhr.responseJSON.pesan : 'Terjadi kesalahan.';
+        Swal.fire({ icon: 'error', title: 'Gagal Menyimpan', text: pesan });
+      }
+    });
+  });
+
+  // ── Tombol Reset ─────────────────────────────────────────
+  $('#btnReset').on('click', resetForm);
+
+  function resetForm() {
+    $('#nama, #stok, #harga, #kadaluarsa').val('');
+    $('#kategori').val('');
+    $('.form-control, .form-select').removeClass('is-invalid');
+    $('#previewHarga').addClass('d-none');
+  }
+
+});
+</script>
+
+</body>
+</html>

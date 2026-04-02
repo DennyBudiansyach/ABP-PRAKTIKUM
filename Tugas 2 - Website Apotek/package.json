@@ -1,0 +1,12 @@
+{
+  "name": "apotek-app",
+  "version": "1.0.0",
+  "description": "Sistem Manajemen Data Obat Apotek",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

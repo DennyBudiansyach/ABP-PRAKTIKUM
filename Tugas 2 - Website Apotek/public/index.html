@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApotekApp – Dashboard</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── NAVBAR ──────────────────────────────────────────────── -->
+<nav class="navbar navbar-expand-lg navbar-dark px-4">
+  <a class="navbar-brand fw-800" href="index.html">
+    <i class="bi bi-capsule-pill me-2"></i>ApteKarsidenan
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navMenu">
+    <ul class="navbar-nav ms-auto gap-1">
+      <li class="nav-item"><a class="nav-link active" href="index.html"><i class="bi bi-house me-1"></i>Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="data.html"><i class="bi bi-table me-1"></i>Data Obat</a></li>
+      <li class="nav-item"><a class="nav-link" href="form.html"><i class="bi bi-plus-circle me-1"></i>Tambah Obat</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────── -->
+<section class="hero-section text-center">
+  <div class="container">
+    <div class="hero-badge mb-3">Manajemen Obat Apotek</div>
+    <h1 class="hero-title">Sistem Kelola Data Obat<br /><span class="text-accent"> Apotek Karisidenan</span></h1>
+    <p class="hero-sub mt-3 mb-4">Website pencatatan stok obat apotek.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="data.html"  class="btn btn-primary-custom px-4 py-2"><i class="bi bi-table me-2"></i>Lihat Data Obat</a>
+      <a href="form.html"  class="btn btn-outline-custom px-4 py-2"><i class="bi bi-plus-circle me-2"></i>Tambah Obat</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STAT CARDS ───────────────────────────────────────────── -->
+<section class="container my-5">
+  <div class="row g-4" id="statCards">
+    <!-- Diisi oleh JavaScript -->
+  </div>
+</section>
+
+<!-- ── INFO CARDS ───────────────────────────────────────────── -->
+<section class="container mb-5">
+  <h4 class="section-title mb-4">Fitur Utama</h4>
+  <div class="row g-4">
+
+    <div class="col-md-4">
+      <div class="feature-card h-100 p-4">
+        <div class="feature-icon mb-3"><i class="bi bi-database-add"></i></div>
+        <h5 class="fw-700">Tambah Obat</h5>
+        <p class="text-muted small">Input data obat baru dengan form yang mudah dan terstruktur.</p>
+        <a href="form.html" class="btn btn-sm btn-feature mt-2">Buka Form →</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="feature-card h-100 p-4">
+        <div class="feature-icon mb-3"><i class="bi bi-search"></i></div>
+        <h5 class="fw-700">Cari & Filter</h5>
+        <p class="text-muted small">Temukan obat dengan cepat menggunakan fitur pencarian DataTable.</p>
+        <a href="data.html" class="btn btn-sm btn-feature mt-2">Buka Tabel →</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="feature-card h-100 p-4">
+        <div class="feature-icon mb-3"><i class="bi bi-pencil-square"></i></div>
+        <h5 class="fw-700">Edit & Hapus</h5>
+        <p class="text-muted small">Perbarui informasi obat atau hapus data yang sudah tidak diperlukan.</p>
+        <a href="data.html" class="btn btn-sm btn-feature mt-2">Kelola Data →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ───────────────────────────────────────────────── -->
+<footer class="footer-bar text-center py-3">
+  <small>© 2025 ApteKarsidenan · by Node.js & Bootstrap</small>
+</footer>
+
+<!-- ── SCRIPTS ──────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+// Ambil data dari API lalu hitung statistik untuk stat cards
+$(document).ready(function () {
+
+  $.getJSON('/api/obat', function (data) {
+
+    const totalObat   = data.length;
+    const totalStok   = data.reduce((sum, o) => sum + o.stok, 0);
+    const stokRendah  = data.filter(o => o.stok < 50).length;
+
+    // Cek obat yang kadaluarsa dalam 30 hari
+    const sekarang    = new Date();
+    const segera      = data.filter(o => {
+      const selisih = (new Date(o.kadaluarsa) - sekarang) / (1000 * 60 * 60 * 24);
+      return selisih >= 0 && selisih <= 30;
+    }).length;
+
+    // Daftar stat cards
+    const stats = [
+      { label: 'Total Jenis Obat',    value: totalObat,  icon: 'bi-capsule',        color: 'stat-blue'   },
+      { label: 'Total Stok',          value: totalStok,  icon: 'bi-box-seam',       color: 'stat-teal'   },
+      { label: 'Stok Rendah (<50)',   value: stokRendah, icon: 'bi-exclamation-triangle', color: 'stat-orange' },
+      { label: 'Segera Kadaluarsa',   value: segera,     icon: 'bi-clock-history',  color: 'stat-red'    },
+    ];
+
+    // Render kartu statistik
+    stats.forEach(function (s) {
+      $('#statCards').append(`
+        <div class="col-6 col-md-3">
+          <div class="stat-card ${s.color} p-4 text-center">
+            <i class="bi ${s.icon} stat-icon"></i>
+            <div class="stat-value">${s.value}</div>
+            <div class="stat-label">${s.label}</div>
+          </div>
+        </div>
+      `);
+    });
+
+  }).fail(function () {
+    $('#statCards').html('<p class="text-danger text-center">Gagal memuat data. Pastikan server berjalan.</p>');
+  });
+
+});
+</script>
+
+</body>
+</html>
