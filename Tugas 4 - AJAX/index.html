@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil — AJAX Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #171717;
+      --border: #262626;
+      --text-main: #ededed;
+      --text-muted: #888888;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .sub {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--text-main);
+      color: var(--bg);
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-bottom: 32px;
+    }
+    button:hover {
+      opacity: 0.85;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #hasil {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fade 0.3s ease forwards;
+    }
+    @keyframes fade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .info {
+      flex: 1;
+    }
+    .name {
+      font-weight: 500;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .meta div {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border);
+      border-top-color: var(--text-main);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .error {
+      color: #ef4444;
+      text-align: center;
+      font-size: 14px;
+      padding: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Direktori Profil</h1>
+    <p class="sub">Data dimuat dinamis via AJAX</p>
+  </div>
+
+  <button id="btn" onclick="ambilData()">Tampilkan Profil</button>
+
+  <div id="hasil-profil"></div>
+
+  <script>
+    const svgJob = `<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`;
+    const svgLoc = `<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
+    const svgRefresh = `<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>`;
+
+    function ambilData() {
+      const div = document.getElementById('hasil-profil');
+      const btn = document.getElementById('btn');
+      
+      btn.disabled = true;
+      btn.textContent = 'Memuat...';
+      div.innerHTML = `<div class="spinner"></div>`;
+
+      fetch('data.php')
+        .then(r => r.json())
+        .then(data => {
+          div.innerHTML = '';
+          data.forEach((p, i) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.animationDelay = `${i * 0.1}s`;
+            card.innerHTML = `
+              <div class="avatar">${p.nama[0]}</div>
+              <div class="info">
+                <div class="name">${p.nama}</div>
+                <div class="meta">
+                  <div>${svgJob} ${p.pekerjaan}</div>
+                  <div>${svgLoc} ${p.lokasi}</div>
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">
+                  Nama: ${p.nama} | Pekerjaan: ${p.pekerjaan} | Lokasi: ${p.lokasi}
+                </div>
+              </div>`;
+            div.appendChild(card);
+          });
+          btn.innerHTML = `${svgRefresh} Refresh`;
+          btn.disabled = false;
+        })
+        .catch(() => {
+          div.innerHTML = `<p class="error">Gagal terhubung ke server.</p>`;
+          btn.textContent = 'Coba Lagi';
+          btn.disabled = false;
+        });
+    }
+  </script>
+</body>
+</html>
