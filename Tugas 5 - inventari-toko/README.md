@@ -200,19 +200,19 @@ Buka browser dan akses: **http://localhost:8000**
 ## Dokumentasi Tampilan
 
 ### Halaman Login
-![Login](SCREENSHOT/login.png)
+![Login](SCREENSHOT/Login.png)
 
 ### Halaman Register
-![Register](SCREENSHOT/register.png)
+![Register](SCREENSHOT/Register.png)
 
 ### Dashboard
-![Dashboard](SCREENSHOT/dashboard.png)
+![Dashboard](SCREENSHOT/Dashboard.png)
 
 ### Halaman Profile
 ![Profile](SCREENSHOT/Profile.png)
 
 ### Data Produk (Tabel)
-![Data Produk](SCREENSHOT/products.png)
+![Data Produk](SCREENSHOT/Products.png)
 
 ### Form Tambah Produk
 ![Tambah Produk](SCREENSHOT/ProductsCreate.png)
